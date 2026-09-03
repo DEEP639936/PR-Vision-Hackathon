@@ -1,0 +1,14 @@
+{
+  "name": "prvision-provider-sidecar",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PR•VISION evidence-provider sidecar — wraps the z-ai-web-dev-sdk (web search, page reader, LLM, vision, image search) behind a local HTTP API for the Python backend.",
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "z-ai-web-dev-sdk": "^0.0.18"
+  }
+}

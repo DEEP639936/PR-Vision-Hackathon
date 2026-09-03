@@ -1,0 +1,40 @@
+# Environment / secrets
+.env
+*.env
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ML artifacts (trained models are reproducible via scripts/train_models.py)
+ml/models/*.joblib
+ml/models/*.pkl
+ml/models/*.json
+!ml/models/.gitkeep
+ml/datasets/*.db
+ml/datasets/*.csv
+!ml/datasets/.gitkeep
+
+# Node / frontend build artifacts (vendored libs are committed)
+frontend/js/vendor/*.map
+
+# Databases
+*.db
+*.sqlite3
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Logs
+*.log
+logs/

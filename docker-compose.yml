@@ -1,0 +1,115 @@
+# =============================================================================
+# PR•VISION — full deployment (FastAPI + MySQL 8 + provider sidecar)
+# Best for: VPS / any Docker host with persistent named volumes.
+#
+#   cp .env.example .env   # fill in secrets, then:
+#   docker compose up -d --build
+#   open http://<host>:8000
+#
+# The API image embeds a Node sidecar; here we run the sidecar as its own
+# service instead (SIDECAR_EMBEDDED=false on api) so it scales/restarts
+# independently. No secrets are stored here; everything comes from .env.
+# =============================================================================
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: prvision-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root-change-me}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-prvision}
+      MYSQL_USER: ${MYSQL_USER:-prvision}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-change-me}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql-data:/var/lib/mysql
+    # Bound to localhost only — never expose 3306 to the internet.
+    ports:
+      - "127.0.0.1:3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-root-change-me}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  sidecar:
+    build: ./sidecar
+    container_name: prvision-sidecar
+    restart: unless-stopped
+    environment:
+      SIDECAR_PORT: "8787"
+      # z-ai SDK credentials (web search / page reader / LLM / vision).
+      # Leave empty to run degraded: big-5 harvest + LLM evidence disable
+      # themselves honestly; demo/HackerNews/Mastodon pipelines keep flowing.
+      ZAI_CONFIG_JSON: ${ZAI_CONFIG_JSON:-}
+    # Alternative to the env var: mount an existing config file instead.
+    # volumes:
+    #   - ${HOME}/.z-ai-config:/home/node/.z-ai-config:ro
+    expose:
+      - "8787"   # internal network only — never published
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8787/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  api:
+    build: .
+    container_name: prvision-api
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+      sidecar:
+        condition: service_started
+    environment:
+      APP_ENV: production
+      DB_ENGINE: mysql
+      MYSQL_HOST: mysql
+      MYSQL_PORT: "3306"
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-prvision}
+      MYSQL_USER: ${MYSQL_USER:-prvision}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-change-me}
+      CORS_ORIGINS: ${CORS_ORIGINS:-*}
+      INGESTION_ENABLED_ON_STARTUP: ${INGESTION_ENABLED_ON_STARTUP:-true}
+      INGESTION_INTERVAL_SECONDS: ${INGESTION_INTERVAL_SECONDS:-30}
+      WEIGHT_SPREAD_RISK: ${WEIGHT_SPREAD_RISK:-0.60}
+      WEIGHT_MISINFORMATION_RISK: ${WEIGHT_MISINFORMATION_RISK:-0.40}
+      # Provider sidecar: dedicated service (embedded copy disabled)
+      SIDECAR_ENABLED: "true"
+      SIDECAR_EMBEDDED: "false"
+      SIDECAR_URL: http://sidecar:8787
+      # Public-API platforms (keyless, no creds needed)
+      MASTODON_INSTANCES: ${MASTODON_INSTANCES:-mastodon.world,techhub.social,universeodon.com}
+      HACKERNEWS_ENABLED: ${HACKERNEWS_ENABLED:-true}
+      # Auth (change before going public!)
+      SECRET_KEY: ${SECRET_KEY:-}
+      SEED_DEMO_USER: ${SEED_DEMO_USER:-true}
+      # Platform credentials (optional — upgrade big-5 from web-harvest to official APIs)
+      X_BEARER_TOKEN: ${X_BEARER_TOKEN:-}
+      REDDIT_CLIENT_ID: ${REDDIT_CLIENT_ID:-}
+      REDDIT_CLIENT_SECRET: ${REDDIT_CLIENT_SECRET:-}
+      META_ACCESS_TOKEN: ${META_ACCESS_TOKEN:-}
+      LINKEDIN_ACCESS_TOKEN: ${LINKEDIN_ACCESS_TOKEN:-}
+      # Evidence providers (optional)
+      GOOGLE_FACTCHECK_API_KEY: ${GOOGLE_FACTCHECK_API_KEY:-}
+      NEWSAPI_KEY: ${NEWSAPI_KEY:-}
+    ports:
+      - "8000:8000"
+    volumes:
+      - models-data:/srv/prvision/ml/models
+      - datasets-data:/srv/prvision/ml/datasets
+    command: >
+      sh -c "alembic upgrade head &&
+             { python ../scripts/seed_demo_data.py --posts 12 || true; } &&
+             { python ../scripts/train_models.py || true; } &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 2"
+
+volumes:
+  mysql-data:
+  models-data:
+  datasets-data:

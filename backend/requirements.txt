@@ -1,0 +1,46 @@
+# =============================================================================
+# PR•VISION — backend requirements (Python 3.11+)
+# =============================================================================
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.30,<1.0
+pydantic>=2.7,<3.0
+pydantic-settings>=2.3,<3.0
+email-validator>=2.0         # pydantic EmailStr (auth register/login) — REQUIRED
+python-multipart>=0.0.9      # multipart form parsing (VERIFY uploads) — REQUIRED
+
+# Database
+SQLAlchemy>=2.0,<2.1
+alembic>=1.13,<2.0
+PyMySQL>=1.1,<2.0            # pure-python MySQL driver
+cryptography>=42.0           # MySQL sha2 auth support
+aiosqlite>=0.20              # async sqlite fallback (dev/demo)
+
+# HTTP / async / HTML parsing (verification pipeline)
+httpx>=0.27,<1.0
+beautifulsoup4>=4.12
+lxml>=5.0
+
+# Data & ML
+pandas>=2.0,<3.0
+numpy>=1.26
+scikit-learn>=1.4
+xgboost>=2.0
+joblib>=1.3
+
+# Media & document intelligence (spec #8)
+Pillow>=10.0                 # EXIF, manipulation heuristics, image decoding
+pytesseract>=0.3.10          # OCR (requires the tesseract binary on the host)
+pypdf>=4.0                   # PDF text + metadata
+PyMuPDF>=1.24                # PDF structure forensics (fitz)
+python-docx>=1.1             # DOCX text/tables/metadata
+
+# Report export (spec #19)
+reportlab>=4.0               # PDF investigator reports
+
+# Testing
+pytest>=8.0
+pytest-asyncio>=0.23
+
+# Production server hardening (graceful signals)
+# NOTE: gunicorn is used in Docker for multi-worker deployment
+gunicorn>=22.0; sys_platform != "win32"

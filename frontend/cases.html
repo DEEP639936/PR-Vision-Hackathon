@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PR•VISION — investigation cases workspace." />
+  <title>PR•VISION — Investigation Cases</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231d2735'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%234a8cff'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/css/styles.css?v=2.0.0" />
+  <link rel="stylesheet" href="/css/verify.css?v=2.0.0" />
+  <link rel="stylesheet" href="/css/dashboard.css?v=2.0.0" />
+  <link rel="stylesheet" href="/css/responsive.css?v=2.0.0" />
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <header class="topbar glass">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><span></span></div>
+        <div class="brand-text">
+          <h1>PR•VISION</h1>
+          <p>Investigation Cases</p>
+        </div>
+      </div>
+
+      <nav class="main-nav" aria-label="Primary">
+        <a href="/dashboard"><svg class="icon"><use href="#i-radar"/></svg><span>Early Warning</span></a>
+        <a href="/verify"><svg class="icon"><use href="#i-search"/></svg><span>Verify Anything</span></a>
+        <a href="/cases" class="active"><svg class="icon"><use href="#i-folder"/></svg><span>Cases</span></a>
+      </nav>
+
+      <div class="topbar-status">
+        <div class="auth-area" id="auth-area" data-auth="signed-out">
+          <a class="btn btn-ghost btn-sm" href="/login" id="login-link">Log in</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="verify-hero" aria-label="Cases workspace">
+        <h1>Investigation cases</h1>
+        <p>Saved analyses with investigator notes, status tracking and evidence snapshots.
+           <strong>Sign in required</strong> — cases are operator workspace, not public data.</p>
+      </section>
+
+      <section class="glass panel" aria-label="Case filters">
+        <div class="filter-row">
+          <label for="status-filter" class="filter-label">Status</label>
+          <select id="status-filter" class="select-input">
+            <option value="">All</option>
+            <option value="OPEN">OPEN</option>
+            <option value="MONITORING">MONITORING</option>
+            <option value="ESCALATED">ESCALATED</option>
+            <option value="CLOSED">CLOSED</option>
+          </select>
+          <button class="btn btn-ghost btn-sm" id="reload-btn" type="button">Reload</button>
+        </div>
+      </section>
+
+      <section id="cases-list" class="cases-grid" aria-label="Saved cases" aria-live="polite">
+        <div class="glass panel muted">Loading cases…</div>
+      </section>
+
+      <section id="case-detail" class="case-detail hidden" aria-label="Case detail"></section>
+    </main>
+
+    <footer class="app-footer">
+      <span>PR•VISION © 2026 — Early-warning intelligence platform.</span>
+      <span class="muted">Probabilistic analysis; forecasts are estimates, not certainties.</span>
+    </footer>
+  </div>
+
+  <div id="toast-stack" class="toast-stack" aria-live="polite"></div>
+
+  <script src="/js/utils.js?v=1.1.0"></script>
+  <script src="/js/api.js?v=1.2.0"></script>
+  <script src="/js/cases.js?v=1.1.0"></script>
+</body>
+</html>

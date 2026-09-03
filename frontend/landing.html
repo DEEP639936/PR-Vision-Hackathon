@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PR•VISION — AI-powered multimodal misinformation intelligence & early-warning platform. Detect → Verify → Analyze → Predict → Prioritize." />
+  <title>PR•VISION — See Misinformation Spread Before It Happens</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231d2735'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%234a8cff'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/css/styles.css?v=2.0.0" />
+  <link rel="stylesheet" href="/css/landing.css?v=2.0.0" />
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+    <symbol id="i-file-text" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+    <symbol id="i-check-circle" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></symbol>
+    <symbol id="i-alert-triangle" viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+    <symbol id="i-repeat" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></symbol>
+    <symbol id="i-trending-up" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.83z"/><line x1="7" y1="7" x2="7.01" y2="7"/></symbol>
+    <symbol id="i-bar-chart" viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></symbol>
+    <symbol id="i-paperclip" viewBox="0 0 24 24"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ============================================================ HEADER -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="PR•VISION — home">
+        <span class="brand-mark" aria-hidden="true"><span class="brand-core"></span></span>
+        <span class="brand-name">PR<span class="dot">•</span>VISION</span>
+      </a>
+
+      <div class="header-actions">
+        <a class="login-link" href="/login">Log in</a>
+        <a class="btn btn-primary cta-btn" href="/register">Get started</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- =========================================================== HERO -->
+    <section class="hero section" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow-chip"><span class="chip-dot" aria-hidden="true"></span>Multimodal misinformation intelligence</p>
+        <h1 id="hero-title">See misinformation spread <span class="accent">before it happens.</span></h1>
+        <p class="hero-sub">
+          PR•VISION ingests URLs, text, images, screenshots, PDFs and DOCX; extracts the claims worth checking;
+          retrieves real web evidence; and runs media forensics. XGBoost models then forecast how a story will
+          spread over the next two hours — and rank exactly which post to intervene on first.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary btn-lg" href="/verify">Start verifying</a>
+          <a class="btn btn-ghost btn-lg" href="/dashboard">View live dashboard</a>
+        </div>
+        <ul class="trust-row" aria-label="Platform capability summary">
+          <li><span class="trust-num num">6</span><span class="trust-label">evidence provider classes</span></li>
+          <li><span class="trust-num num">3</span><span class="trust-label">forecast horizons · +30/+60/+120 min</span></li>
+          <li><span class="trust-num num">0–100</span><span class="trust-label">intervention priority scoring</span></li>
+        </ul>
+        <p class="honesty-note">&gt;_ Probabilistic analysis. Evidence-linked. Every decision explainable.</p>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <canvas id="net-canvas" aria-hidden="true"></canvas>
+        <div class="float-chip chip-a"><span class="fc-dot fc-critical"></span>PRIORITY 87 · CRITICAL</div>
+        <div class="float-chip chip-b"><span class="fc-dot fc-accent"></span>FORECAST +120 MIN</div>
+      </div>
+    </section>
+
+    <!-- ======================================================= PIPELINE -->
+    <section class="pipeline section" aria-labelledby="pipeline-title">
+      <header class="section-head">
+        <p class="eyebrow">The pipeline</p>
+        <h2 id="pipeline-title">Twelve stages. One evidence trail.</h2>
+        <p class="section-sub">Every submission travels the same auditable path — raw content in, cited and prioritized intelligence out.</p>
+      </header>
+      <ol class="pipeline-track reveal">
+        <li class="stage">
+          <div class="stage-top"><span class="stage-num num">01</span><span class="stage-icon" aria-hidden="true"><svg><use href="#i-download"/></svg></span></div>
+          <h3>Content Extraction</h3>
+          <p>URLs, text, images, PDFs &amp; DOCX parsed into clean text and media.</p>
+        </li>
+        <li class="stage">
+          <div class="stage-top"><span class="stage-num num">02</span><span class="stage-icon" aria-hidden="true"><svg><use href="#i-file-text"/></svg></span></div>
+          <h3>Claim Extraction</h3>
+          <p>Checkable claims isolated from opinion, quotes and context.</p>
+        </li>
+        <li class="stage">
+          <div class="stage-top"><span class="stage-num num">03</span><span class="stage-icon" aria-hidden="true"><svg><use href="#i-compass"/></svg></span></div>
+          <h3>Entity &amp; Topic</h3>
+          <p>People, organizations, places and topics mapped for retrieval.</p>
+        </li>
+        <li class="stage">
+          <div class="stage-top"><span class="stage-num num">04</span><span class="stage-icon" aria-hidden="true"><svg><use href="#i-globe"/></svg></span></div>
+          <h3>Evidence Search</h3>
+          <p>Live web retrieval across six evidence provider classes.</p>
+        </li>
+        <li class="stage">
+          <div class="stage-top"><span class="stage-num num">05</span><span class="stage-icon" aria-hidden="true"><svg><use href="#i-check-circle"/></svg></span></div>
+          <h3>Fact-Check Search</h3>
+          <p>Professional fact-check corpora cross-referenced per claim.</p>
+        </li>
+        <li class="stage">
+          <div class="stage-top"><span class="stage-num num">06</span><span class="stage-icon" aria-hidden="true"><svg><use href="#i-layers"/></svg></span></div>
+          <h3>Source Analysis</h3>
+          <p>Domain reliability, publishing history and bias signals.</p>
+        </li>
+        <li class="stage">
+          <div class="stage-top"><span class="stage-num num">07</span><span class="stage-icon" aria-hidden="true"><svg><use href="#i-image"/></svg></span></div>
+          <h3>Media Analysis</h3>
+          <p>OCR text lift, EXIF metadata and manipulation-signal screening.</p>
+        </li>
+        <li class="stage">
+          <div class="stage-top"><span class="stage-num num">08</span><span class="stage-icon" aria-hidden="true"><svg><use href="#i-alert-triangle"/></svg></span></div>
+          <h3>Misinformation Risk</h3>
+          <p>Weighted risk model fusing every upstream signal.</p>
+        </li>
+        <li class="stage">
+          <div class="stage-top"><span class="stage-num num">09</span><span class="stage-icon" aria-hidden="true"><svg><use href="#i-repeat"/></svg></span></div>
+          <h3>Propagation Analysis</h3>
+          <p>Share velocity, acceleration and network-growth curves.</p>
+        </li>
+        <li class="stage">
+          <div class="stage-top"><span class="stage-num num">10</span><span class="stage-icon" aria-hidden="true"><svg><use href="#i-trending-up"/></svg></span></div>
+          <h3>Spread Forecast</h3>
+          <p>XGBoost projection of shares at +30, +60 and +120 minutes.</p>
+        </li>
+        <li class="stage">
+          <div class="stage-top"><span class="stage-num num">11</span><span class="stage-icon" aria-hidden="true"><svg><use href="#i-target"/></svg></span></div>
+          <h3>Intervention Priority</h3>
+          <p>0–100 score with the WHY THIS SCORE reasons attached.</p>
+        </li>
+        <li class="stage">
+          <div class="stage-top"><span class="stage-num num">12</span><span class="stage-icon" aria-hidden="true"><svg><use href="#i-bell"/></svg></span></div>
+          <h3>Alert &amp; Case</h3>
+          <p>Analyst alerts raised; investigator report exported.</p>
+        </li>
+      </ol>
+      <p class="scroll-hint" aria-hidden="true">← Swipe the pipeline →</p>
+    </section>
+
+    <!-- =================================================== CAPABILITIES -->
+    <section class="capabilities section" aria-labelledby="cap-title">
+      <header class="section-head">
+        <p class="eyebrow">Capabilities</p>
+        <h2 id="cap-title">Everything needed to separate signal from noise.</h2>
+      </header>
+      <div class="cap-grid">
+        <article class="cap-card reveal">
+          <span class="cap-icon" aria-hidden="true"><svg><use href="#i-link"/></svg></span>
+          <h3>Verify Anything</h3>
+          <p>Seven input modes — URL, text, image, screenshot, PDF, DOCX and CSV — feeding one evidence-first pipeline.</p>
+          <span class="cap-tag">7 INPUT MODES</span>
+        </article>
+        <article class="cap-card reveal">
+          <span class="cap-icon" aria-hidden="true"><svg><use href="#i-globe"/></svg></span>
+          <h3>Evidence Engine</h3>
+          <p>Real web retrieval plus professional fact-check sources. Evidence arrives cited — never fabricated.</p>
+          <span class="cap-tag">NEVER FABRICATED</span>
+        </article>
+        <article class="cap-card reveal">
+          <span class="cap-icon" aria-hidden="true"><svg><use href="#i-image"/></svg></span>
+          <h3>Media Forensics</h3>
+          <p>OCR text lift, EXIF metadata and manipulation signals screened for images and screenshots.</p>
+          <span class="cap-tag">OCR · EXIF · TAMPER</span>
+        </article>
+        <article class="cap-card reveal">
+          <span class="cap-icon" aria-hidden="true"><svg><use href="#i-repeat"/></svg></span>
+          <h3>Propagation Intelligence</h3>
+          <p>Share velocity, acceleration and network-growth curves — not just raw share counts.</p>
+          <span class="cap-tag">VELOCITY · ACCEL</span>
+        </article>
+        <article class="cap-card reveal">
+          <span class="cap-icon" aria-hidden="true"><svg><use href="#i-trending-up"/></svg></span>
+          <h3>XGBoost Forecasting</h3>
+          <p>Spread projected +30, +60 and +120 minutes ahead — each horizon with a confidence band.</p>
+          <span class="cap-tag">+30 / +60 / +120 MIN</span>
+        </article>
+        <article class="cap-card reveal">
+          <span class="cap-icon" aria-hidden="true"><svg><use href="#i-target"/></svg></span>
+          <h3>Intervention Priority</h3>
+          <p>A single 0–100 score, plus the WHY THIS SCORE reasons that justify where it lands.</p>
+          <span class="cap-tag">WHY THIS SCORE</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- =================================================== TRANSPARENCY -->
+    <section class="transparency section" aria-labelledby="transparency-title">
+      <header class="section-head">
+        <p class="eyebrow">Built for transparency</p>
+        <h2 id="transparency-title">Honest by design.</h2>
+        <p class="section-sub">A decision-support instrument, not an oracle — the interface never hides what the model does not know.</p>
+      </header>
+      <ul class="promise-row reveal">
+        <li class="promise"><span class="promise-icon" aria-hidden="true"><svg><use href="#i-paperclip"/></svg></span><div><strong>Evidence always cited</strong><span>source, URL, date</span></div></li>
+        <li class="promise"><span class="promise-icon" aria-hidden="true"><svg><use href="#i-bar-chart"/></svg></span><div><strong>Uncertainty shown</strong><span>confidence on every verdict</span></div></li>
+        <li class="promise"><span class="promise-icon" aria-hidden="true"><svg><use href="#i-tag"/></svg></span><div><strong>Simulated data labeled</strong><span>demo inputs clearly marked DEMO</span></div></li>
+        <li class="promise"><span class="promise-icon" aria-hidden="true"><svg><use href="#i-shield"/></svg></span><div><strong>No forced verdicts</strong><span>never TRUE/FALSE without evidence</span></div></li>
+      </ul>
+    </section>
+
+    <!-- ====================================================== FINAL CTA -->
+    <section class="final-cta section" aria-labelledby="cta-title">
+      <div class="cta-panel reveal">
+        <h2 id="cta-title">Ready to see what&rsquo;s spreading?</h2>
+        <p>Run your first verification in seconds, or open the live early-warning dashboard. No installation required.</p>
+        <div class="cta-actions">
+          <a class="btn btn-primary btn-lg" href="/register">Get started</a>
+          <span class="cta-alt">Already have an account? <a href="/login">Log in</a></span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================= FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span class="footer-brand">PR<span class="dot">•</span>VISION</span>
+      <p>© 2026 — Early-warning intelligence platform. Probabilistic analysis; forecasts are estimates, not certainties.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/verify">Verify</a>
+        <a href="/cases">Cases</a>
+        <a href="/login">Log in</a>
+        <a href="/register">Get started</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="/js/landing.js?v=1.1.0"></script>
+</body>
+</html>

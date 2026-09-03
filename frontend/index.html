@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PR•VISION — AI-Powered Multimodal Misinformation Intelligence, Verification & Early-Warning Platform." />
+  <title>PR•VISION — Multimodal Verification & Early Warning</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231d2735'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%234a8cff'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/css/styles.css?v=2.0.0" />
+  <link rel="stylesheet" href="/css/dashboard.css?v=2.0.0" />
+  <link rel="stylesheet" href="/css/verify.css?v=2.0.0" />
+  <link rel="stylesheet" href="/css/responsive.css?v=2.0.0" />
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <!-- ============================================================ HEADER -->
+    <header class="topbar glass">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><span></span></div>
+        <div class="brand-text">
+          <h1>PR•VISION</h1>
+          <p>Multimodal Intelligence</p>
+        </div>
+      </div>
+
+      <nav class="main-nav" aria-label="Primary">
+        <a href="/dashboard" class="active"><svg class="icon"><use href="#i-radar"/></svg><span>Early Warning</span></a>
+        <a href="/verify"><svg class="icon"><use href="#i-search"/></svg><span>Verify Anything</span></a>
+        <a href="/cases"><svg class="icon"><use href="#i-folder"/></svg><span>Cases</span></a>
+      </nav>
+
+      <div class="topbar-status" id="system-status" role="status" aria-live="polite">
+        <div class="status-pill" id="pill-system" title="System health from /api/health">
+          <span class="dot"></span><span class="label">SYSTEM</span><span class="value">…</span>
+        </div>
+        <div class="status-pill" id="pill-db" title="Database connectivity">
+          <span class="dot"></span><span class="label">DATABASE</span><span class="value">…</span>
+        </div>
+        <div class="status-pill" id="pill-pipeline" title="Data pipeline / ingestion scheduler">
+          <span class="dot"></span><span class="label">PIPELINE</span><span class="value">…</span>
+        </div>
+        <div class="status-pill" id="pill-model" title="XGBoost forecast model status">
+          <span class="dot"></span><span class="label">MODEL</span><span class="value">…</span>
+        </div>
+        <div class="status-pill platforms-pill" id="pill-platforms" title="Active platforms">
+          <span class="label">PLATFORMS</span><span class="value" id="platform-chips">…</span>
+        </div>
+        <div class="last-update" id="last-update" title="Last successful refresh">—</div>
+        <div class="auth-area" id="auth-area" data-auth="signed-out">
+          <a class="btn btn-ghost btn-sm" href="/login" id="login-link">Log in</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+      <!-- ========================================================= KPI ROW -->
+      <section class="kpi-row" aria-label="Key indicators">
+        <article class="kpi" id="kpi-posts">
+          <header><h2>Posts monitored</h2></header>
+          <div class="kpi-value" data-count>0</div>
+          <footer class="kpi-sub" id="kpi-platforms-sub">—</footer>
+        </article>
+        <article class="kpi kpi-critical" id="kpi-critical">
+          <header><h2>Critical alerts</h2></header>
+          <div class="kpi-value" data-count>0</div>
+          <footer class="kpi-sub">priority ≥ 75</footer>
+        </article>
+        <article class="kpi kpi-high" id="kpi-high">
+          <header><h2>High-risk posts</h2></header>
+          <div class="kpi-value" data-count>0</div>
+          <footer class="kpi-sub">priority ≥ 50</footer>
+        </article>
+        <article class="kpi" id="kpi-forecast">
+          <header><h2>Predicted shares</h2></header>
+          <div class="kpi-value"><span data-count>0</span><small class="unit">/ 60m</small></div>
+          <footer class="kpi-sub">XGBoost forecast sum</footer>
+        </article>
+        <article class="kpi" id="kpi-risk">
+          <header><h2>Average risk</h2></header>
+          <div class="kpi-value"><span data-count>0</span><small class="unit">/ 1.0</small></div>
+          <footer class="kpi-sub" id="kpi-risk-sub">misinformation component</footer>
+        </article>
+      </section>
+
+      <!-- ==================================================== ALERT FEED -->
+      <section class="panel glass alert-feed-panel" aria-label="Live alert feed">
+        <header class="panel-head">
+          <div>
+            <h2>Live alert feed</h2>
+            <p class="panel-sub">Automatic triggers: misinfo risk, acceleration spikes, forecast jumps, conflicting evidence, media signals</p>
+          </div>
+          <div class="panel-actions">
+            <span class="alert-count-chip" id="alert-count" title="Unacknowledged alerts">0</span>
+            <button class="btn btn-ghost btn-sm" id="alert-reload" type="button" aria-label="Reload alerts"><svg class="icon"><use href="#i-refresh"/></svg></button>
+          </div>
+        </header>
+        <div id="alert-feed" class="alert-feed" aria-live="polite">
+          <div class="muted" style="padding:8px 2px;">Loading alerts…</div>
+        </div>
+      </section>
+
+      <!-- ==================================================== CHARTS ROW 1 -->
+      <section class="grid-main">
+        <article class="panel glass chart-panel">
+          <header class="panel-head">
+            <div>
+              <h2>Live share velocity</h2>
+              <p class="panel-sub">Shares over time for the selected post</p>
+            </div>
+            <div class="panel-actions">
+              <label class="sr-only" for="velocity-post">Post</label>
+              <select id="velocity-post" class="control control-sm"></select>
+              <div class="seg" role="group" aria-label="Time window">
+                <button class="seg-btn" data-window="30">30m</button>
+                <button class="seg-btn active" data-window="60">1h</button>
+                <button class="seg-btn" data-window="120">2h</button>
+              </div>
+            </div>
+          </header>
+          <div class="chart-box"><canvas id="chart-velocity" aria-label="Share count over time chart"></canvas></div>
+        </article>
+
+        <article class="panel glass side-panel">
+          <header class="panel-head"><div><h2>Pipeline status</h2><p class="panel-sub">Connectors &amp; data sources</p></div></header>
+          <ul class="source-list" id="source-list">
+            <li class="placeholder-row">Loading connector status…</li>
+          </ul>
+          <div class="ingestion-controls">
+            <button class="btn btn-primary" id="btn-ingestion-toggle">Start ingestion</button>
+            <button class="btn" id="btn-demo-add" title="Generate one new demo post through the full pipeline">+ Demo post</button>
+          </div>
+        </article>
+      </section>
+
+      <!-- ================================================ HIGH-PRIORITY TABLE -->
+      <section class="panel glass table-panel">
+        <header class="panel-head">
+          <div>
+            <h2>Intervention priority queue</h2>
+            <p class="panel-sub">Which post should a moderator investigate first?</p>
+          </div>
+          <div class="panel-actions filters">
+            <label class="sr-only" for="filter-platform">Platform</label>
+            <select id="filter-platform" class="control control-sm">
+              <option value="">All platforms</option>
+              <option value="demo">Demo</option>
+              <option value="x">X (Twitter)</option>
+              <option value="reddit">Reddit</option>
+              <option value="instagram">Instagram</option>
+              <option value="facebook">Facebook</option>
+              <option value="linkedin">LinkedIn</option>
+              <option value="mastodon">Mastodon</option>
+              <option value="hackernews">Hacker News</option>
+            </select>
+            <label class="sr-only" for="filter-label">Priority</label>
+            <select id="filter-label" class="control control-sm">
+              <option value="">All priorities</option>
+              <option value="CRITICAL">Critical</option>
+              <option value="HIGH">High</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="LOW">Low</option>
+            </select>
+            <label class="sr-only" for="filter-search">Search</label>
+            <input id="filter-search" class="control control-sm" type="search" placeholder="Search content…" />
+          </div>
+        </header>
+        <div class="table-wrap">
+          <table class="priority-table" aria-describedby="queue-hint">
+            <thead>
+              <tr>
+                <th scope="col">Post</th>
+                <th scope="col">Platform</th>
+                <th scope="col" class="num">Shares</th>
+                <th scope="col" class="num">Velocity</th>
+                <th scope="col" class="num">Accel.</th>
+                <th scope="col" class="num">Pred. +Shares</th>
+                <th scope="col" class="num">Misinfo Risk</th>
+                <th scope="col" class="num">Priority</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody id="priority-tbody">
+              <tr><td colspan="9" class="empty-row">No scored posts yet — generate demo data to populate the queue.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-hint" id="queue-hint">Click any row for the full investigation view.</p>
+      </section>
+
+      <!-- =================================================== CHARTS ROW 2 -->
+      <section class="grid-bottom">
+        <article class="panel glass chart-panel">
+          <header class="panel-head">
+            <div>
+              <h2>Share forecast</h2>
+              <p class="panel-sub">Historical shares + predicted additional shares</p>
+            </div>
+            <div class="panel-actions"><span class="legend-note">dashed = forecast</span></div>
+          </header>
+          <div class="chart-box"><canvas id="chart-forecast" aria-label="Forecast chart"></canvas></div>
+        </article>
+
+        <article class="panel glass chart-panel">
+          <header class="panel-head">
+            <div>
+              <h2>Propagation network</h2>
+              <p class="panel-sub">Reshare cascade (demo data where marked)</p>
+            </div>
+          </header>
+          <div class="chart-box network-box"><canvas id="chart-network" aria-label="Propagation network diagram"></canvas></div>
+        </article>
+      </section>
+
+      <footer class="app-footer">
+        <p>PR•VISION is a <strong>decision-support</strong> tool for moderators &amp; fact-checkers. Risk estimates are probabilistic signals — never automated truth verdicts or takedowns.</p>
+      </footer>
+    </main>
+  </div>
+
+  <!-- ================================================ POST DETAIL DRAWER -->
+  <aside class="drawer glass-strong" id="post-drawer" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+    <header class="drawer-head">
+      <div>
+        <h2 id="drawer-title">Post investigation</h2>
+        <p class="drawer-sub" id="drawer-sub">—</p>
+      </div>
+      <button class="icon-btn" id="drawer-close" aria-label="Close details"><svg class="icon"><use href="#i-close"/></svg></button>
+    </header>
+    <div class="drawer-body" id="drawer-body">
+      <div class="drawer-loading">Loading…</div>
+    </div>
+  </aside>
+  <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+
+  <!-- TOASTS -->
+  <div class="toast-stack" id="toast-stack" aria-live="polite"></div>
+
+  <script src="/js/vendor/chart.umd.min.js?v=1.0.2"></script>
+  <script src="/js/utils.js?v=1.2.0"></script>
+  <script src="/js/api.js?v=1.2.0"></script>
+  <script src="/js/charts.js?v=1.1.0"></script>
+  <script src="/js/auth-chip.js?v=1.0.1"></script>
+  <script src="/js/posts.js?v=1.2.0"></script>
+  <script src="/js/alerts.js?v=1.3.0"></script>
+  <script src="/js/dashboard.js?v=1.1.0"></script>
+</body>
+</html>

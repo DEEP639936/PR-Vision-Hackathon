@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PR•VISION — Verify Anything: evidence-first multimodal misinformation verification for URLs, images, PDFs, documents and text." />
+  <title>PR•VISION — Verify Anything</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231d2735'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%234a8cff'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/css/styles.css?v=2.0.0" />
+  <link rel="stylesheet" href="/css/verify.css?v=2.0.0" />
+  <link rel="stylesheet" href="/css/responsive.css?v=2.0.0" />
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <!-- ============================================================ HEADER -->
+    <header class="topbar glass">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><span></span></div>
+        <div class="brand-text">
+          <h1>PR•VISION</h1>
+          <p>Multimodal Verification</p>
+        </div>
+      </div>
+
+      <nav class="main-nav" aria-label="Primary">
+        <a href="/dashboard"><svg class="icon"><use href="#i-radar"/></svg><span>Early Warning</span></a>
+        <a href="/verify" class="active"><svg class="icon"><use href="#i-search"/></svg><span>Verify Anything</span></a>
+        <a href="/cases"><svg class="icon"><use href="#i-folder"/></svg><span>Cases</span></a>
+      </nav>
+
+      <div class="topbar-status" id="system-status" role="status" aria-live="polite">
+        <div class="last-update" id="last-update">—</div>
+      </div>
+    </header>
+
+    <main class="content">
+      <!-- ============================================================== HERO -->
+      <section class="verify-hero">
+        <h1>Verify anything</h1>
+        <p>Evidence-first verification for URLs, articles, images, screenshots, PDFs, documents and pasted text.
+           Claims are checked against live external sources and professional fact-checks — every conclusion
+           arrives with citations, confidence and reasoning. No <em>FAKE</em>/<em>REAL</em> buttons, ever.</p>
+      </section>
+
+      <!-- ========================================================= DROPZONE -->
+      <section class="dropzone-wrap">
+        <div class="mode-tabs" role="tablist" aria-label="Input mode">
+          <button class="active" data-mode="url" role="tab">URL</button>
+          <button data-mode="text" role="tab">Text</button>
+          <button data-mode="image" role="tab">Image</button>
+          <button data-mode="screenshot" role="tab">Screenshot</button>
+          <button data-mode="pdf" role="tab">PDF</button>
+          <button data-mode="docx" role="tab">DOC</button>
+          <button data-mode="csv" role="tab">CSV</button>
+        </div>
+
+        <div class="dropzone glass" id="dropzone" role="button" tabindex="0"
+             aria-label="Drop a file here or click to choose, or switch tabs to paste a URL or text">
+          <div class="dz-icon" id="dz-icon"><svg class="icon"><use href="#i-link"/></svg></div>
+          <h2 id="dz-title">Drop a link, file — or paste a URL</h2>
+          <p id="dz-sub">Switch tabs above to choose the input type. Files are analysed locally; fetching respects robots, auth and paywalls.</p>
+          <div class="dz-types">
+            <span>PDF</span><span>IMAGE</span><span>DOC</span><span>URL</span><span>TEXT</span><span>CSV</span><span>JSON</span>
+          </div>
+          <input type="file" id="file-input" hidden
+                 accept=".pdf,.docx,.doc,.csv,.tsv,.json,.html,.htm,.txt,.md,.png,.jpg,.jpeg,.gif,.webp,.bmp,.tiff" />
+        </div>
+
+        <div class="dz-input-row" id="row-url">
+          <input type="url" id="input-url" placeholder="https://example.com/article — news article, blog post, or public social post URL" />
+        </div>
+        <div class="dz-input-row" id="row-text">
+          <textarea id="input-text" placeholder="Paste the text, quote, or claim to investigate…"></textarea>
+        </div>
+
+        <div class="verify-actions">
+          <button class="btn-primary" id="btn-verify"><svg class="icon"><use href="#i-zap"/></svg> Start analysis</button>
+        </div>
+        <p class="verify-note" id="verify-note">
+          PR•VISION retrieves only publicly accessible evidence through legitimate APIs and keyless public sources.
+          The absence of a fact-check is never treated as proof that a claim is true.
+        </p>
+      </section>
+
+      <!-- ========================================================= JOB QUEUE -->
+      <section class="jobs-panel">
+        <div class="panel-head">
+          <h2>Verification queue</h2>
+          <span class="badge badge-live" id="queue-live">AUTO-REFRESH</span>
+        </div>
+        <div id="job-list" aria-live="polite"></div>
+      </section>
+
+      <!-- ======================================================= PROVIDERS -->
+      <section class="jobs-panel">
+        <div class="panel-head"><h2>Evidence providers</h2></div>
+        <div class="providers-strip" id="providers-strip"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/api.js?v=1.2.1"></script>
+  <script src="/js/auth-chip.js?v=1.0.1"></script>
+  <script src="/js/verify.js?v=1.3.0"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+# =============================================================================
+# PR•VISION — single-container "lite" deployment (SQLite + embedded sidecar)
+# Best for: Railway / Render / Fly.io (one service from one Dockerfile) and
+# quick VPS demos. Data persists on the lite-data volume; swap to
+# docker-compose.yml (MySQL) for heavier production use.
+#
+#   docker compose -f docker-compose.lite.yml up -d --build
+#   open http://<host>:8000
+#
+# No secrets are stored here; everything comes from the environment/.env.
+# =============================================================================
+services:
+  api:
+    build: .
+    container_name: prvision-lite
+    restart: unless-stopped
+    environment:
+      APP_ENV: production
+      DB_ENGINE: sqlite
+      # Absolute path on the persistent volume (relative paths resolve to
+      # /srv/prvision, which is container-ephemeral except ml/* volumes).
+      SQLITE_PATH: /data/prvision.db
+      CORS_ORIGINS: ${CORS_ORIGINS:-*}
+      INGESTION_ENABLED_ON_STARTUP: ${INGESTION_ENABLED_ON_STARTUP:-true}
+      INGESTION_INTERVAL_SECONDS: ${INGESTION_INTERVAL_SECONDS:-30}
+      WEIGHT_SPREAD_RISK: ${WEIGHT_SPREAD_RISK:-0.60}
+      WEIGHT_MISINFORMATION_RISK: ${WEIGHT_MISINFORMATION_RISK:-0.40}
+      # Provider sidecar: embedded copy inside this container
+      SIDECAR_ENABLED: "true"
+      SIDECAR_EMBEDDED: "true"
+      SIDECAR_URL: http://127.0.0.1:8787
+      # z-ai SDK credentials (optional — harvest degrades honestly without)
+      ZAI_CONFIG_JSON: ${ZAI_CONFIG_JSON:-}
+      # Public-API platforms (keyless)
+      MASTODON_INSTANCES: ${MASTODON_INSTANCES:-mastodon.world,techhub.social,universeodon.com}
+      HACKERNEWS_ENABLED: ${HACKERNEWS_ENABLED:-true}
+      # Auth (change before going public!)
+      SECRET_KEY: ${SECRET_KEY:-}
+      SEED_DEMO_USER: ${SEED_DEMO_USER:-true}
+      # Platform credentials (optional)
+      X_BEARER_TOKEN: ${X_BEARER_TOKEN:-}
+      REDDIT_CLIENT_ID: ${REDDIT_CLIENT_ID:-}
+      REDDIT_CLIENT_SECRET: ${REDDIT_CLIENT_SECRET:-}
+      META_ACCESS_TOKEN: ${META_ACCESS_TOKEN:-}
+      LINKEDIN_ACCESS_TOKEN: ${LINKEDIN_ACCESS_TOKEN:-}
+      GOOGLE_FACTCHECK_API_KEY: ${GOOGLE_FACTCHECK_API_KEY:-}
+      NEWSAPI_KEY: ${NEWSAPI_KEY:-}
+    ports:
+      - "8000:8000"
+    volumes:
+      # /data holds the SQLite DB — mount a persistent disk here on your host
+      - lite-data:/data
+      - models-data:/srv/prvision/ml/models
+      - datasets-data:/srv/prvision/ml/datasets
+    command: >
+      sh -c "[ -f /data/prvision.db ] || cp ../ml/datasets/prvision_demo.db /data/prvision.db;
+             alembic upgrade head &&
+             { python ../scripts/seed_demo_data.py --posts 12 || true; } &&
+             { python ../scripts/train_models.py || true; } &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 2"
+
+volumes:
+  lite-data:
+  models-data:
+  datasets-data:
